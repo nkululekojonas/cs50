@@ -1,3 +1,4 @@
 # ignore cs50 library files
 cs50.h
 libcs50-11.0.3.dylib*
+mario
