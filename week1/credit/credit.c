@@ -1,10 +1,12 @@
 #include <cs50.h>
+#include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 // Function prototypes
 int calculate_checksum(long number);
 int sum_of_product(int number);
-bool is_valid(int number);
+void print_card(int number);
 
 int main(void)
 {
@@ -16,32 +18,10 @@ int main(void)
     }
     while (number < 0);
 
-    // Define card variables
-    bool valid;
-    int checksum;
-    string card;
-
-    // Calculate the check the checksum
-    checksum = calculate_checksum(number);
-    printf("checksum: %i\n", checksum);
-
-    // Check for card for validity i.e correct length and starting digit
-    if (checksum % 10 != 0)
-    {
-        printf("INVALID\n");
-    } else 
-    {
-        // Print the credit card type
-        printf("VALID");
-    }
-}
-
-// Return the checksum value for a given credit number
-int calculate_checksum(long number)
-{
     // Initial variables
     int sum = 0;
     int position = 0;
+    int leading_num;
 
     while (number > 0)
     {
@@ -50,7 +30,7 @@ int calculate_checksum(long number)
         number /= 10;
 
         // Check if position is odd and either multiply by 2 and add to sum or pass
-        if ((position % 2) == 1)
+        if ((position % 2) != 0)
         {
             // Calculate the value for digit and sum of their product
             sum += sum_of_product(digit * 2);
@@ -58,13 +38,55 @@ int calculate_checksum(long number)
         {
             sum += digit;
         }
+        
+        // Get first two digits when in range
+        if (number > 10 && number < 100)
+        {
+            leading_num = number;
+        }
 
         // Move a position 
         position++;
     }
 
-    return sum;
+    // Check for card for validity i.e correct length and starting digit
+    if (sum % 10 == 0)
+    {
+        if (leading_num / 10 == 4)
+        {
+            leading_num = 4;
+        }
+        
+        // Show the card
+        print_card(leading_num);
+    } 
+    else 
+    {
+        // Card not valid
+        printf("INVALID\n");
+    }
 }
+
+void print_card(int number)
+{
+    switch (number)
+    {
+        case 4:
+            printf("Visa\n");
+            break;
+        case 34:
+        case 37:
+            printf("American Express\n");
+            break;
+        case 51:
+        case 52:
+        case 53:
+        case 54:
+        case 55:
+            printf("Mastercard\n");
+            break;
+    }
+}   
 
 int sum_of_product(int number)
 {
@@ -82,3 +104,4 @@ int sum_of_product(int number)
     }
     return sum;
 }
+
