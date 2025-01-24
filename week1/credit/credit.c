@@ -1,12 +1,10 @@
 #include <cs50.h>
-#include <math.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 // Function prototypes
 int calculate_checksum(long number);
 int sum_of_product(int number);
-void print_card(int number);
+void print_card(int number, int lengt);
 
 int main(void)
 {
@@ -20,6 +18,7 @@ int main(void)
 
     // Initial variables
     int sum = 0;
+    int length = 0;
     int position = 0;
     int leading_num;
 
@@ -46,47 +45,40 @@ int main(void)
         }
 
         // Move a position 
+        length++;
         position++;
     }
 
     // Check for card for validity i.e correct length and starting digit
-    if (sum % 10 == 0)
+    if (sum % 10 != 0 || (length != 13 && length != 15 && length != 16))
     {
-        if (leading_num / 10 == 4)
-        {
-            leading_num = 4;
-        }
-        
-        // Show the card
-        print_card(leading_num);
-    } 
-    else 
-    {
-        // Card not valid
         printf("INVALID\n");
-    }
+        return 0;
+    } 
+    
+    // Show the card
+    print_card(leading_num, length);
 }
 
-void print_card(int number)
+void print_card(int number, int length)
 {
-    switch (number)
+    if (number / 10 == 4 || (number == 4 && length == 13))
     {
-        case 4:
-            printf("Visa\n");
-            break;
-        case 34:
-        case 37:
-            printf("American Express\n");
-            break;
-        case 51:
-        case 52:
-        case 53:
-        case 54:
-        case 55:
-            printf("Mastercard\n");
-            break;
+        printf("VISA\n");
     }
-}   
+    else if (number == 34 || number == 37)
+    {
+        printf("AMEX\n");
+    }
+    else if (number >= 51 && number <= 55)
+    {
+        printf("MASTERCARD\n");
+    }
+    else
+    {
+        printf("INVALID\n");
+    }
+} 
 
 int sum_of_product(int number)
 {
