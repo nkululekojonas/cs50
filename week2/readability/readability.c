@@ -7,7 +7,7 @@
 // Function prototype
 int average(string text);
 
-int main(int argc, string argv[])
+int main()
 {
     // Prompt the user for input
     string text = get_string("Text: ");
