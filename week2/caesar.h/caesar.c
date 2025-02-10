@@ -22,7 +22,6 @@ int main(int argc, string argv[])
     // Prompt the user for plaint text
     string text = get_string("Plaintext: ");
 
-    string cipher;
     // For eacher character in plain
     for (int i = 0, len = strlen(text); i < len; i++)
     {
