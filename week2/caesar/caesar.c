@@ -17,7 +17,7 @@ int main(int argc, string argv[])
         return 1;
     }
     // Convert argv[1] from string to int
-    int key = atoi(argv[1]);
+    int key = atoi(argv[1]) % 26;
     
     // Prompt the user for plaint text
     string text = get_string("Plaintext: ");
@@ -27,16 +27,20 @@ int main(int argc, string argv[])
     {
         // Get character
         char c = text[i];
+
         // Rotate the character if its a letter
         if (isupper(c)) {
-           text[i] = (c - 'A' + key) % 26 + 'A';
 
+           text[i] = (c - 'A' + key) % 26 + 'A';
         } 
         else if (islower(c))
         {
+
             text[i] = (c - 'a' + key) % 26 + 'a';
         }
     }
+
+    // Output cipher
     printf("Cipher: %s\n", text);
 
     // Exit program
