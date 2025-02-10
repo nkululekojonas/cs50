@@ -28,13 +28,13 @@ int main(int argc, string argv[])
         // Get character
         char c = text[i];
         // Rotate the character if its a letter
-        if (c >= 'A' && c <= 'Z') {
-           text[i] = ((c - 'A' + key) % 26 + 26) % 26 + 'A';
+        if (isupper(c)) {
+           text[i] = (c - 'A' + key) % 26 + 'A';
 
         } 
-        else if (c >= 'a' && c <= 'z')
+        else if (islower(c))
         {
-            text[i] = ((c - 'a' + key) % 26 + 26) % 26 + 'a';
+            text[i] = (c - 'a' + key) % 26 + 'a';
         }
     }
     printf("Cipher: %s\n", text);
