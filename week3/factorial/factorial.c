@@ -14,11 +14,9 @@ int main()
 // Take a number and return the factoiral
 int factorial(int num)
 {
-    // Base case 1! = 1
+    // Base case 
     if (num <= 1) 
-    {
         return 1;
-    }
     
     return num * factorial(num - 1);
 }
