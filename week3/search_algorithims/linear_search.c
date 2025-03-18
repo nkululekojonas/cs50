@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 
     int index = linear_search(numbers, SIZE, target);
     if (index != -1)
-        printf("Target: %d Index: %d\n", target, index);
+        printf("Found at Index: %d\n", index);
     else 
         printf("Target not found\n");
 
