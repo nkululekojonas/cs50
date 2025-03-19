@@ -1,0 +1,36 @@
+sort1 uses: Bubble Sort
+sort1 sorted5000 reversed5000 random5000
+      0.024s     0.084s       0.053
+
+      sorted10000 reversed10000 random10000
+      0.039s      0.211s        0.177s
+
+      sorted50000 reversed50000 random50000
+      0m0.244s    4.824s        5.579s
+
+How do you know?: sort1 has a time complexty of O(n) in the best case and O(n^2) in the worst case, 
+                  this can be seen in the time differances above.
+
+sort2 uses: Merge Sort
+sort2 sorted5000 reversed5000 random5000
+      0.021s     0.023s       0.021s
+
+      sorted10000 reversed10000 random10000
+      0.041s      0.044s        0.061s
+
+      sorted50000 reversed50000 random50000
+      0.266s      0.356s        0.304s
+
+How do you know?: Merge Sort has a time complexity of O(n log n) in the both the best case and worst case.
+
+sort3 uses: Selection Sort
+sort3 sorted5000 reversed5000 random5000
+      0.038s     0.041s       0.038s
+
+      sorted10000 reversed10000 random10000
+      0.115s      0.116s        0.125s
+
+      sorted50000 reversed50000 random50000
+      2.079s      2.259s        2.124s
+
+How do you know?: Selection Sort has a time complexity of O(n^2) in both the best case and worst case senario.
