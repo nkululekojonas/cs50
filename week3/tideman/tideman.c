@@ -98,14 +98,37 @@ int main(int argc, string argv[])
 // Update ranks given a new vote
 bool vote(int rank, string name, int ranks[])
 {
-    // TODO
+    // Check every candidate to see if they are chosen 
+    for ( int i = 0; i < candidate_count; i++)
+    {
+        // If they are prefered
+        if (strcmp(candidates[i], name) == 0)
+        {
+            // update the voters ranks with the candidate
+            ranks[rank] = i;
+            return true;
+        }
+    }
+    // The name didn't match any of the candidates return false
     return false;
 }
 
 // Update preferences given one voter's ranks
 void record_preferences(int ranks[])
 {
-    // TODO
+    // For every rank 
+    for (int i = 0; i < candidate_count; i++)
+    {
+        // Get prefered canidate
+        int x = ranks[i];
+        for (int j = i + 1; j < candidate_count; j++)
+        {
+            // Get lower ranked preference
+            int y = ranks[j];
+            // Record preference
+            preferences[x][y] += 1;
+        }
+    }
     return;
 }
 

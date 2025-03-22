@@ -18,4 +18,12 @@
 
    Step Four: 
         The source of the graph is the winner i.e the a winner that has been locked in that doesnt lose to anyon else.
+
+  // preferences[i][j] stores how many voters prefer i over j so 5 Alice over Bob
+  // locked[i][j] stores where candidate i holds a win over candidate j so true for Alice over Bob
+  // pairs:
+        winnders index
+        losers index
+
+  // candidate stores strings of cadidates names
 ->
