@@ -1,5 +1,6 @@
 #include <cs50.h>
 #include <stdio.h>
+#include <string.h>
 
 // Max number of candidates
 #define MAX 9
@@ -98,8 +99,8 @@ int main(int argc, string argv[])
 // Update ranks given a new vote
 bool vote(int rank, string name, int ranks[])
 {
-    // Check every candidate to see if they are chosen 
-    for ( int i = 0; i < candidate_count; i++)
+    // Check every candidate to see if they are chosen
+    for (int i = 0; i < candidate_count; i++)
     {
         // If they are prefered
         if (strcmp(candidates[i], name) == 0)
@@ -116,7 +117,7 @@ bool vote(int rank, string name, int ranks[])
 // Update preferences given one voter's ranks
 void record_preferences(int ranks[])
 {
-    // For every rank 
+    // For every rank
     for (int i = 0; i < candidate_count; i++)
     {
         // Get prefered canidate
@@ -135,27 +136,122 @@ void record_preferences(int ranks[])
 // Record pairs of candidates where one is preferred over the other
 void add_pairs(void)
 {
-    // TODO
+    // Start pair count
+    pair_count = 0;
+
+    // For every candidate
+    for (int i = 0; i < candidate_count; i++)
+    {
+        // Every other candidate
+        for (int j = i + 1; j < candidate_count; j++)
+        {
+            // Create a new pair
+            pair current;
+            if (preferences[i][j] > preferences[j][i])
+            {
+                current.winner = i;
+                current.loser = j;
+                pairs[pair_count] = current;
+                pair_count++;
+            }
+            else if (preferences[j][i] > preferences[i][j])
+            {
+                current.winner = j;
+                current.loser = i;
+                pairs[pair_count] = current;
+                pair_count++;
+            }
+        }
+    }
     return;
 }
 
 // Sort pairs in decreasing order by strength of victory
 void sort_pairs(void)
 {
-    // TODO
+    // Iterate over the every pair
+    for (int i = 0; i < pair_count; i++)
+    {
+        // Get the current pair
+        pair current = pairs[i];
+
+        // Get the strength of victory
+        int margin =
+            preferences[current.winner][current.loser] - preferences[current.loser][current.winner];
+
+        // Compare against other pairs
+        for (int j = i + 1; j < pair_count; j++)
+        {
+            pair next_pair = pairs[j];
+            int next_margin = preferences[next_pair.winner][next_pair.loser] -
+                              preferences[next_pair.loser][next_pair.winner];
+
+            if (next_margin > margin)
+            {
+                pair temp = current;
+                pairs[i] = next_pair;
+                pairs[j] = temp;
+                current = next_pair;
+                margin = next_margin;
+            }
+        }
+    }
     return;
 }
 
 // Lock pairs into the candidate graph in order, without creating cycles
+bool creates_cycle(int winner, int loser)
+{
+    if (winner == loser)
+        return true;
+
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (locked[loser][i])
+        {
+            if (creates_cycle(winner, i))
+                return true;
+        }
+    }
+
+    return false;
+}
+// Lock pairs into the candidate graph in order, without creating cycles
 void lock_pairs(void)
 {
-    // TODO
+    // For every pair
+    for (int i = 0; i < pair_count; i++)
+    {
+        // Get the current pair
+        pair current = pairs[i];
+        if (!creates_cycle(current.winner, current.loser))
+            locked[current.winner][current.loser] = true;
+    }
     return;
 }
 
-// Print the winner of the election
 void print_winner(void)
 {
-    // TODO
-    return;
+    // Iterate through all candidates
+    for (int i = 0; i < candidate_count; i++)
+    {
+        bool is_winner = true;
+
+        // Check if any candidate locks this candidate (i.e., checks for incoming edges)
+        for (int j = 0; j < candidate_count; j++)
+        {
+            if (locked[j][i]) // If any candidate locks i, it's not the winner
+            {
+                is_winner = false;
+                break;
+            }
+        }
+
+        // If no one locks candidate i, they are the winner
+        if (is_winner)
+        {
+            printf("%s\n", candidates[i]);
+            return; // Once we find the winner, we can stop
+        }
+    }
 }
