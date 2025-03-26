@@ -1,5 +1,4 @@
 // Modifies the volume of an audio file
-
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,24 +19,36 @@ int main(int argc, char *argv[])
     FILE *input = fopen(argv[1], "r");
     if (input == NULL)
     {
-        printf("Could not open file.\n");
+        printf("Could not open input file.\n");
         return 1;
     }
 
     FILE *output = fopen(argv[2], "w");
     if (output == NULL)
     {
-        printf("Could not open file.\n");
+        printf("Could not open output file.\n");
+        fclose(input);
         return 1;
     }
 
     float factor = atof(argv[3]);
 
-    // TODO: Copy header from input file to output file
+    // Read & write header
+    uint8_t header[HEADER_SIZE];
+    fread(header, 1, HEADER_SIZE, input);
+    fwrite(header, 1, HEADER_SIZE, output);
 
-    // TODO: Read samples from input file and write updated data to output file
+    // Process samples one at a time
+    int16_t sample;
+    while (fread(&sample, sizeof(int16_t), 1, input))
+    {
+        sample *= factor;  // Adjust volume
+        fwrite(&sample, sizeof(int16_t), 1, output);
+    }
 
     // Close files
     fclose(input);
     fclose(output);
+
+    return 0;
 }
