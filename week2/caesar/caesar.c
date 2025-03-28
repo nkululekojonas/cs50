@@ -8,7 +8,7 @@
 // Function prototype
 bool is_valid(string str);
 
-int main(int argc, string argv[]) 
+int main(int argc, string argv[])
 {
     // Validate program arguements
     if (argc != 2 || !is_valid(argv[1]))
@@ -18,7 +18,7 @@ int main(int argc, string argv[])
     }
     // Convert argv[1] from string to int
     int key = atoi(argv[1]) % 26;
-    
+
     // Prompt the user for plaint text
     string text = get_string("Plaintext: ");
 
@@ -32,7 +32,7 @@ int main(int argc, string argv[])
         if (isupper(c)) {
 
            text[i] = (c - 'A' + key) % 26 + 'A';
-        } 
+        }
         else if (islower(c))
         {
 
@@ -41,7 +41,7 @@ int main(int argc, string argv[])
     }
 
     // Output cipher
-    printf("Cipher: %s\n", text);
+    printf("ciphertext: %s\n", text);
 
     // Exit program
     return 0;

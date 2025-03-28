@@ -30,18 +30,17 @@ int main(void)
         printf("Player 1: %i\nPlayer 2: %i", score_1, score_2);
         return 0;
     }
-    
-    // Print Tie
-    printf("TIE!\n");
-    printf("Score: %i\n", score_1);
 
-    // Successfull 
+    // Print Tie
+    printf("Tie!\n");
+
+    // Successfull
     return 0;
 }
 
 int score(string word)
 {
-    // Decalre score 
+    // Decalre score
     int total = 0;
 
     for (int i = 0, len = strlen(word); i < len; i++)
@@ -58,7 +57,7 @@ int score(string word)
     return total;
 }
 
-// Given a character return the scarrble score 
+// Given a character return the scarrble score
 int char_score(char letter)
 {
     return scores[letter - 'A'];
